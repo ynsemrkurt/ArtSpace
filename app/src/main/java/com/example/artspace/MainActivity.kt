@@ -21,13 +21,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
 import com.example.artspace.ui.theme.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -44,6 +46,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ArtSpaceApp(modifier: Modifier = Modifier) {
+    val artNumber = remember { mutableStateOf(1) }
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -56,17 +59,17 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
         Row {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { artNumber.value++.also { if (it > 5) artNumber.value = 1 } },
                 modifier = Modifier.width(110.dp)
             ) {
-                Text(text = "Previous")
+                Text(text = stringResource(R.string.previous))
             }
             Spacer(modifier = Modifier.width(24.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { artNumber.value--.also { if (it < 1) artNumber.value = 5 } },
                 modifier = Modifier.width(110.dp)
             ) {
-                Text(text = "Next")
+                Text(text = stringResource(R.string.next))
             }
         }
     }
@@ -125,8 +128,8 @@ val artList = listOf(
     Triple(R.drawable.kiruna, R.string.kiruna, R.string.isvec),
     Triple(R.drawable.machu_pichu, R.string.machu_picchu, R.string.peru),
     Triple(R.drawable.myanmar, R.string.bagan, R.string.myanmar),
-    Triple(R.drawable.zakynthos_adas, R.string.zakintos_adasi,R.string.yunanistan),
-    Triple(R.drawable.ic_launcher_background, R.string.an_tkabir,R.string.t_rkiye)
+    Triple(R.drawable.zakynthos_adas, R.string.zakintos_adasi, R.string.yunanistan),
+    Triple(R.drawable.antkabir, R.string.an_tkabir, R.string.t_rkiye)
 )
 
 @Preview(

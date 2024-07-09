@@ -10,4 +10,6 @@
     <string name="yunanistan">Yunanistan</string>
     <string name="an_tkabir">Anıtkabir</string>
     <string name="t_rkiye">Türkiye</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 </resources>
