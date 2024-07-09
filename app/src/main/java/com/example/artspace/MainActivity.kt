@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import com.example.artspace.ui.theme.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -119,6 +120,14 @@ fun ArtTitle(title: String, name: String) {
         }
     }
 }
+
+val artList = listOf(
+    Triple(R.drawable.kiruna, R.string.kiruna, R.string.isvec),
+    Triple(R.drawable.machu_pichu, R.string.machu_picchu, R.string.peru),
+    Triple(R.drawable.myanmar, R.string.bagan, R.string.myanmar),
+    Triple(R.drawable.zakynthos_adas, R.string.zakintos_adasi,R.string.yunanistan),
+    Triple(R.drawable.ic_launcher_background, R.string.an_tkabir,R.string.t_rkiye)
+)
 
 @Preview(
     showBackground = true,
