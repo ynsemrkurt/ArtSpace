@@ -4,13 +4,29 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.artspace.ui.theme.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +35,98 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ArtSpaceTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                ArtSpaceApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
+fun ArtSpaceApp(modifier: Modifier = Modifier) {
+    Column(
         modifier = modifier
-    )
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ArtCard(imageResId = R.drawable.ic_launcher_background)
+        Spacer(modifier = Modifier.height(16.dp))
+        ArtTitle(title = "Title", name = "Name")
+        Spacer(modifier = Modifier.height(16.dp))
+        Row {
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier.width(110.dp)
+            ) {
+                Text(text = "Previous")
+            }
+            Spacer(modifier = Modifier.width(24.dp))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier.width(110.dp)
+            ) {
+                Text(text = "Next")
+            }
+        }
+    }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun ArtCard(@DrawableRes imageResId: Int) {
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = imageResId),
+            contentDescription = null,
+            modifier = Modifier
+                .background(Color.White)
+                .padding(16.dp)
+                .height(445.dp)
+                .width(250.dp)
+        )
+    }
+}
+
+@Composable
+fun ArtTitle(title: String, name: String) {
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        modifier = Modifier
+            .padding(16.dp)
+            .height(100.dp)
+            .width(250.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(16.dp)
+                .fillMaxSize()
+                .align(Alignment.CenterHorizontally),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineSmall,
+            )
+            Text(
+                text = name,
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+fun ArtPreview() {
     ArtSpaceTheme {
-        Greeting("Android")
+        ArtSpaceApp()
     }
 }
