@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Art Space</string>
+    <string name="kiruna">Kiruna</string>
+    <string name="isvec">İsveç</string>
+    <string name="machu_picchu">Machu Picchu</string>
+    <string name="peru">Peru</string>
+    <string name="bagan">Bagan</string>
+    <string name="myanmar">Myanmar</string>
+    <string name="zakintos_adasi">Zakintos Adası</string>
+    <string name="yunanistan">Yunanistan</string>
+    <string name="an_tkabir">Anıtkabir</string>
+    <string name="t_rkiye">Türkiye</string>
 </resources>
