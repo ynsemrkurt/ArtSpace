@@ -25,7 +25,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,27 +49,36 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ArtSpaceApp(modifier: Modifier = Modifier) {
-    val artNumber = remember { mutableStateOf(1) }
+    val artList = listOf(
+        Triple(R.drawable.kiruna, R.string.kiruna, R.string.isvec),
+        Triple(R.drawable.machu_pichu, R.string.machu_picchu, R.string.peru),
+        Triple(R.drawable.myanmar, R.string.bagan, R.string.myanmar),
+        Triple(R.drawable.zakynthos_adas, R.string.zakintos_adasi, R.string.yunanistan),
+        Triple(R.drawable.antkabir, R.string.an_tkabir, R.string.t_rkiye)
+    )
+    val artNumber = remember { mutableStateOf(0) } // Starting index at 0
+
     Column(
         modifier = modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ArtCard(imageResId = R.drawable.ic_launcher_background)
+        val currentArt = artList[artNumber.value]
+        ArtCard(imageResId = currentArt.first)
         Spacer(modifier = Modifier.height(16.dp))
-        ArtTitle(title = "Title", name = "Name")
+        ArtTitle(title = stringResource(id = currentArt.second), name = stringResource(id = currentArt.third))
         Spacer(modifier = Modifier.height(16.dp))
         Row {
             Button(
-                onClick = { artNumber.value++.also { if (it > 5) artNumber.value = 1 } },
+                onClick = { artNumber.value = (artNumber.value - 1).takeIf { it >= 0 } ?: artList.size - 1 },
                 modifier = Modifier.width(110.dp)
             ) {
                 Text(text = stringResource(R.string.previous))
             }
             Spacer(modifier = Modifier.width(24.dp))
             Button(
-                onClick = { artNumber.value--.also { if (it < 1) artNumber.value = 5 } },
+                onClick = { artNumber.value = (artNumber.value + 1) % artList.size },
                 modifier = Modifier.width(110.dp)
             ) {
                 Text(text = stringResource(R.string.next))
@@ -85,11 +97,13 @@ fun ArtCard(@DrawableRes imageResId: Int) {
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .background(Color.White)
                 .padding(16.dp)
                 .height(445.dp)
                 .width(250.dp)
+                .clip(shape = MaterialTheme.shapes.small)
         )
     }
 }
@@ -107,8 +121,7 @@ fun ArtTitle(title: String, name: String) {
             modifier = Modifier
                 .background(Color.White)
                 .padding(16.dp)
-                .fillMaxSize()
-                .align(Alignment.CenterHorizontally),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -123,14 +136,6 @@ fun ArtTitle(title: String, name: String) {
         }
     }
 }
-
-val artList = listOf(
-    Triple(R.drawable.kiruna, R.string.kiruna, R.string.isvec),
-    Triple(R.drawable.machu_pichu, R.string.machu_picchu, R.string.peru),
-    Triple(R.drawable.myanmar, R.string.bagan, R.string.myanmar),
-    Triple(R.drawable.zakynthos_adas, R.string.zakintos_adasi, R.string.yunanistan),
-    Triple(R.drawable.antkabir, R.string.an_tkabir, R.string.t_rkiye)
-)
 
 @Preview(
     showBackground = true,
